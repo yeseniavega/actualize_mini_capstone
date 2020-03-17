@@ -20,4 +20,9 @@ class Api::OrdersController < ApplicationController
       render json: { errors: @order.errors.full_messages }, status: :unprocessable_entity
     end
   end
+
+  def show
+    @order = current_user.orders.find_by(id: params[:id])
+    render "show.json.jb"
+  end
 end
