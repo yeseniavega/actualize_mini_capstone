@@ -18,4 +18,11 @@ class Api::CartedProductsController < ApplicationController
       render json: { errors: @carted_product.errors.full_messages }, status: 422
     end
   end
+
+  def destroy
+    carted_product = current_user.carted_products.where(status: "carted").find_by(id: params[:id])
+    carted_product.status = "removed"
+    carted_product.save
+    render json: { message: "Carted product successfully removed!" }
+  end
 end
